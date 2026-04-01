@@ -1,0 +1,20 @@
+[package]
+name = "terminal-platform"
+description = "Platform-specific glue — font hints, desktop notifications"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+tracing.workspace = true
+thiserror.workspace = true
+
+[target.'cfg(target_os = "linux")'.dependencies]
+# D-Bus notifications
+# fontconfig bindings
+
+[target.'cfg(target_os = "macos")'.dependencies]
+# CoreText / NSUserNotification bindings
+
+[target.'cfg(target_os = "windows")'.dependencies]
+# DirectWrite / toast notification bindings

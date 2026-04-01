@@ -1,0 +1,15 @@
+[package]
+name = "terminal-core"
+description = "Terminal emulation library — VT parser, grid, PTY abstraction"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+vte = "0.14"
+portable-pty = "0.8"
+log.workspace = true
+tracing.workspace = true
+thiserror.workspace = true
+bitflags.workspace = true
+parking_lot.workspace = true

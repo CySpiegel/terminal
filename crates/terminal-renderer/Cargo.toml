@@ -1,0 +1,16 @@
+[package]
+name = "terminal-renderer"
+description = "GPU renderer for terminal via wgpu — glyph atlas, cell batching, shaders"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+terminal-core.workspace = true
+wgpu = "24"
+cosmic-text = "0.12"
+etagere = "0.2"
+bytemuck.workspace = true
+parking_lot.workspace = true
+tracing.workspace = true
+thiserror.workspace = true

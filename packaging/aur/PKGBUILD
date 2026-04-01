@@ -1,0 +1,16 @@
+# Maintainer: CySpiegel
+pkgname=terminal-bin
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="GPU-rendered terminal emulator with built-in GTD"
+arch=('x86_64')
+url="https://github.com/CySpiegel/terminal"
+license=('MIT')
+provides=('terminal')
+conflicts=('terminal')
+source=("${url}/releases/download/v${pkgver}/terminal-v${pkgver}-x86_64-unknown-linux-gnu.tar.gz")
+sha256sums=('SKIP')
+
+package() {
+    install -Dm755 terminal "${pkgdir}/usr/bin/terminal"
+}

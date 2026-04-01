@@ -1,0 +1,35 @@
+[package]
+name = "terminal-app"
+description = "Terminal application — windowing, threading, input, GTD overlay"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "terminal"
+path = "src/main.rs"
+
+[dependencies]
+terminal-core.workspace = true
+terminal-renderer.workspace = true
+terminal-gtd.workspace = true
+terminal-platform.workspace = true
+winit = "0.30"
+clap = { version = "4", features = ["derive"] }
+toml = "0.8"
+dirs = "6"
+notify = "7"
+anyhow.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+serde.workspace = true
+parking_lot.workspace = true
+crossbeam-channel.workspace = true
+
+[package.metadata.deb]
+section = "x11"
+priority = "optional"
+assets = [
+    ["target/release/terminal", "usr/bin/", "755"],
+]
+depends = "$auto"
