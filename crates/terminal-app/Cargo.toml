@@ -1,6 +1,6 @@
 [package]
 name = "terminal-app"
-description = "Terminal application — windowing, threading, input, GTD overlay"
+description = "Terminal application — windowing, threading, input, GTD overlay, AI assistant"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
@@ -13,7 +13,9 @@ path = "src/main.rs"
 terminal-core.workspace = true
 terminal-renderer.workspace = true
 terminal-gtd.workspace = true
+terminal-ai.workspace = true
 terminal-platform.workspace = true
+tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
 winit = "0.30"
 clap = { version = "4", features = ["derive"] }
 toml = "0.8"

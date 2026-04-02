@@ -14,6 +14,8 @@ pub struct Config {
     pub terminal: TerminalConfig,
     #[serde(default)]
     pub gtd: GtdConfig,
+    #[serde(default)]
+    pub ai: terminal_ai::config::AiConfig,
 }
 
 #[derive(Debug, Deserialize)]

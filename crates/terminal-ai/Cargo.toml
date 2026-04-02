@@ -1,0 +1,32 @@
+[package]
+name = "terminal-ai"
+description = "AI coding assistant — OpenAI-compatible LLM client with tool system, agent orchestration, and slash commands"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+terminal-core.workspace = true
+
+# HTTP client for LLM API calls
+reqwest = { version = "0.12", features = ["json", "stream", "rustls-tls"], default-features = false }
+# Async runtime for streaming responses
+tokio = { version = "1", features = ["rt", "macros", "sync", "time", "fs", "process", "io-util"] }
+tokio-stream = "0.1"
+# SSE streaming for OpenAI-compatible APIs
+eventsource-stream = "0.2"
+futures-util = "0.3"
+
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+chrono.workspace = true
+uuid.workspace = true
+parking_lot.workspace = true
+crossbeam-channel.workspace = true
+
+# For tool implementations
+glob = "0.3"
+grep-regex = "0.1"
+walkdir = "2"

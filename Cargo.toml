@@ -4,6 +4,7 @@ members = [
     "crates/terminal-core",
     "crates/terminal-renderer",
     "crates/terminal-gtd",
+    "crates/terminal-ai",
     "crates/terminal-app",
     "crates/terminal-platform",
 ]
@@ -19,6 +20,7 @@ terminal-core = { path = "crates/terminal-core" }
 terminal-renderer = { path = "crates/terminal-renderer" }
 terminal-gtd = { path = "crates/terminal-gtd" }
 terminal-app = { path = "crates/terminal-app" }
+terminal-ai = { path = "crates/terminal-ai" }
 terminal-platform = { path = "crates/terminal-platform" }
 
 # Shared dependencies
