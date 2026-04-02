@@ -7,5 +7,3 @@ pub struct Selection {
     pub end: (u16, u16),
 }
 
-/// A search match in the terminal buffer.
-pub use crate::search::SearchMatch;

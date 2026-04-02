@@ -13,3 +13,4 @@ tracing.workspace = true
 thiserror.workspace = true
 bitflags.workspace = true
 parking_lot.workspace = true
+dirs-next = "2"

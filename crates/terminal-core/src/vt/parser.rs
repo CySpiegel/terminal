@@ -17,10 +17,10 @@ impl Parser {
         }
     }
 
-    /// Advance the parser by one byte.
+    /// Process a chunk of bytes through the parser.
     pub fn advance(&mut self, byte: u8, grid: &mut Grid, events: &mut Vec<TerminalEvent>) {
         let mut handler = Handler::new(grid, events);
-        self.state_machine.advance(&mut handler, byte);
+        self.state_machine.advance(&mut handler, &[byte]);
     }
 }
 
