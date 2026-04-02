@@ -75,9 +75,16 @@ impl AgentCoordinator {
         self.next_id += 1;
 
         let system_prompt = build_role_system_prompt(role);
-        let client = LlmClient::new(&config);
-        let tools = ToolRegistry::new();
-        let permissions = PermissionManager::permissive();
+        let client = match LlmClient::new(config.clone()) {
+            Ok(c) => c,
+            Err(e) => {
+                tracing::error!("Failed to create LLM client for sub-agent: {}", e);
+                // Return the ID but the agent won't work — will fail at submit()
+                return id;
+            }
+        };
+        let tools = ToolRegistry::with_builtins();
+        let permissions = PermissionManager::new(crate::permission::PermissionMode::Auto);
 
         let agent = Agent::new(
             client,

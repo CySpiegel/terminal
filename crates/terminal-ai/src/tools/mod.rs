@@ -23,6 +23,7 @@ pub mod notebook_edit;
 pub mod git_status;
 pub mod process;
 pub mod archive;
+pub mod agent;
 
 use crate::conversation::{FunctionDefinition, ToolDefinition};
 use std::collections::HashMap;
@@ -87,6 +88,7 @@ impl ToolRegistry {
         registry.register_builtin("git_status", git_status::definition(), git_status::execute, PermissionCategory::ReadOnly);
         registry.register_builtin("process", process::definition(), process::execute, PermissionCategory::Execute);
         registry.register_builtin("archive", archive::definition(), archive::execute, PermissionCategory::Execute);
+        registry.register_builtin("agent", agent::definition(), agent::execute, PermissionCategory::Execute);
 
         registry
     }
