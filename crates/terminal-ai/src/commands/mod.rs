@@ -122,6 +122,162 @@ impl CommandRegistry {
         });
 
         registry.register(SlashCommand {
+            name: "compact".to_string(),
+            description: "Compress conversation history to save context".to_string(),
+            handler: CommandHandler::Prompt(|_args| {
+                "Summarize the entire conversation so far into a compact form. \
+                 Preserve all key decisions, code changes, file paths, and action items. \
+                 Present the summary so it can replace the older messages without losing \
+                 important context."
+                    .to_string()
+            }),
+        });
+
+        registry.register(SlashCommand {
+            name: "init".to_string(),
+            description: "Analyze codebase and set up project conventions".to_string(),
+            handler: CommandHandler::Prompt(|_args| {
+                "Analyze the project structure in the current directory. Identify the \
+                 programming language(s), framework(s), build system, and test framework. \
+                 Suggest coding conventions, naming patterns, and best practices for this \
+                 project. Summarize the architecture at a high level."
+                    .to_string()
+            }),
+        });
+
+        registry.register(SlashCommand {
+            name: "diff".to_string(),
+            description: "Show and explain git diff".to_string(),
+            handler: CommandHandler::Prompt(|args| {
+                if args.is_empty() {
+                    "Run `git diff` and `git diff --staged` to see all current changes. \
+                     Explain what the changes do, highlight anything risky, and suggest \
+                     improvements if appropriate."
+                        .to_string()
+                } else {
+                    format!(
+                        "Run `git diff {}` and explain the changes. Highlight anything \
+                         risky and suggest improvements if appropriate.",
+                        args
+                    )
+                }
+            }),
+        });
+
+        registry.register(SlashCommand {
+            name: "doctor".to_string(),
+            description: "Diagnose environment issues".to_string(),
+            handler: CommandHandler::Direct(|_args| {
+                let mut info = Vec::new();
+                info.push(format!("OS: {}", std::env::consts::OS));
+                info.push(format!("Arch: {}", std::env::consts::ARCH));
+                if let Ok(path) = std::env::var("PATH") {
+                    let tool_count = path.split(':').count();
+                    info.push(format!("PATH entries: {}", tool_count));
+                }
+                if let Ok(shell) = std::env::var("SHELL") {
+                    info.push(format!("Shell: {}", shell));
+                }
+                if let Ok(home) = std::env::var("HOME") {
+                    info.push(format!("Home: {}", home));
+                }
+                for tool in &["git", "cargo", "rustc", "node", "python3", "docker"] {
+                    let status = std::process::Command::new("which")
+                        .arg(tool)
+                        .output()
+                        .map(|o| o.status.success())
+                        .unwrap_or(false);
+                    info.push(format!(
+                        "{}: {}",
+                        tool,
+                        if status { "found" } else { "not found" }
+                    ));
+                }
+                info.join("\n")
+            }),
+        });
+
+        registry.register(SlashCommand {
+            name: "batch".to_string(),
+            description: "Run a task across multiple files".to_string(),
+            handler: CommandHandler::Prompt(|args| {
+                format!(
+                    "Run the following task across multiple files: {}. \
+                     Use glob patterns to find the matching files, then apply the \
+                     instruction to each file. Report what was changed.",
+                    args
+                )
+            }),
+        });
+
+        registry.register(SlashCommand {
+            name: "simplify".to_string(),
+            description: "Review code for reuse and efficiency".to_string(),
+            handler: CommandHandler::Prompt(|args| {
+                if args.is_empty() {
+                    "Review the recent changes (git diff) for simplification opportunities. \
+                     Look for duplicated logic, overly complex code, unused imports, and \
+                     chances to reuse existing utilities. Suggest concrete improvements."
+                        .to_string()
+                } else {
+                    format!(
+                        "Review the following code for simplification opportunities: {}. \
+                         Look for duplicated logic, overly complex code, and chances to \
+                         reuse existing utilities.",
+                        args
+                    )
+                }
+            }),
+        });
+
+        registry.register(SlashCommand {
+            name: "memory".to_string(),
+            description: "Show or edit persistent memory".to_string(),
+            handler: CommandHandler::Direct(|args| {
+                if args.is_empty() {
+                    "Memory system placeholder. Use /memory <key>=<value> to set, \
+                     /memory <key> to get, or /memory --list to list all entries."
+                        .to_string()
+                } else {
+                    format!("Memory operation: {}", args)
+                }
+            }),
+        });
+
+        registry.register(SlashCommand {
+            name: "context".to_string(),
+            description: "Show context window usage".to_string(),
+            handler: CommandHandler::Direct(|_args| {
+                "Context window usage information is not available in this handler. \
+                 The conversation manager tracks context usage."
+                    .to_string()
+            }),
+        });
+
+        registry.register(SlashCommand {
+            name: "status".to_string(),
+            description: "Show AI assistant status".to_string(),
+            handler: CommandHandler::Direct(|_args| {
+                "AI assistant is running. Use /model to see the current model, \
+                 /config to see configuration, and /context for context usage."
+                    .to_string()
+            }),
+        });
+
+        registry.register(SlashCommand {
+            name: "search".to_string(),
+            description: "Search the codebase".to_string(),
+            handler: CommandHandler::Prompt(|args| {
+                format!(
+                    "Search the codebase for: {}. \
+                     Use grep and glob tools to find all relevant occurrences. \
+                     Report the matching files and the relevant code snippets.",
+                    args
+                )
+            }),
+        });
+
+        registry.register(SlashCommand {
             name: "help".to_string(),
             description: "Show available commands".to_string(),
             handler: CommandHandler::Direct(|_args| {

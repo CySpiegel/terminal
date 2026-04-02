@@ -10,9 +10,19 @@
 pub mod file_read;
 pub mod file_write;
 pub mod file_edit;
+pub mod file_insert;
 pub mod bash;
 pub mod grep;
 pub mod glob;
+pub mod web_fetch;
+pub mod web_search;
+pub mod think;
+pub mod list_directory;
+pub mod notebook_read;
+pub mod notebook_edit;
+pub mod git_status;
+pub mod process;
+pub mod archive;
 
 use crate::conversation::{FunctionDefinition, ToolDefinition};
 use std::collections::HashMap;
@@ -67,6 +77,16 @@ impl ToolRegistry {
         registry.register_builtin("bash", bash::definition(), bash::execute, PermissionCategory::Execute);
         registry.register_builtin("grep", grep::definition(), grep::execute, PermissionCategory::ReadOnly);
         registry.register_builtin("glob_search", glob::definition(), glob::execute, PermissionCategory::ReadOnly);
+        registry.register_builtin("file_insert", file_insert::definition(), file_insert::execute, PermissionCategory::Write);
+        registry.register_builtin("web_fetch", web_fetch::definition(), web_fetch::execute, PermissionCategory::Network);
+        registry.register_builtin("web_search", web_search::definition(), web_search::execute, PermissionCategory::Network);
+        registry.register_builtin("think", think::definition(), think::execute, PermissionCategory::ReadOnly);
+        registry.register_builtin("list_directory", list_directory::definition(), list_directory::execute, PermissionCategory::ReadOnly);
+        registry.register_builtin("notebook_read", notebook_read::definition(), notebook_read::execute, PermissionCategory::ReadOnly);
+        registry.register_builtin("notebook_edit", notebook_edit::definition(), notebook_edit::execute, PermissionCategory::Write);
+        registry.register_builtin("git_status", git_status::definition(), git_status::execute, PermissionCategory::ReadOnly);
+        registry.register_builtin("process", process::definition(), process::execute, PermissionCategory::Execute);
+        registry.register_builtin("archive", archive::definition(), archive::execute, PermissionCategory::Execute);
 
         registry
     }
